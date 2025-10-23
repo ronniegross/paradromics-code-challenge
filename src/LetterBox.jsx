@@ -1,3 +1,7 @@
 export default function LetterBox() {
-  return <div>LetterBox</div>;
+  return (
+    <div className="letterbox-container">
+      <input></input>
+    </div>
+  );
 }
