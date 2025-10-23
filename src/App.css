@@ -42,7 +42,24 @@
 }
 
 .letterbox-container {
-  padding: 1rem;
+  /* padding: 1rem; */
+  /* font-weight: 2rem; */
+  height: 5rem;
+  width: 5rem;
+  background-color: white;
+  color: black;
+}
+
+.letterbox-container-true {
+  background-color: green;
+}
+
+.letterbox-container-in-word {
+  background-color: orange;
+}
+
+.letterbox-container-not-in-word {
+  background-color: grey;
 }
 
 .letterbox-group-container {

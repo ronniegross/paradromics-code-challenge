@@ -1,11 +1,14 @@
 import "./App.css";
+import { useState } from "react";
 import { useGame } from "./GameContext";
 
 import LetterBox from "./LetterBox";
+import LetterBoxGroup from "./LetterBoxGroup";
 
 export default function App() {
   // Example of using the game context
   const { state, dispatch } = useGame();
+  // const []
 
   console.log("state is :: ", state);
 
@@ -23,37 +26,42 @@ export default function App() {
     }
   };
 
-  const generateLetterBoxRow = () => {
-    let index = 1;
+  const generateLetterBoxRow = (guessIndex) => {
+    let index = 0;
     let rowLength = state.wordLength;
     let wordArr = [];
-    while (index <= rowLength) {
-      console.log("startingLetterBox :: ", index);
+    // let letter = null;
+    while (index < rowLength) {
+      wordArr.push(<LetterBox key={index} position={index}></LetterBox>);
       index++;
-      wordArr.push(<LetterBox key={index}></LetterBox>);
+      // wordArr.push(<LetterBox key={index}>{letter}</LetterBox>);
     }
-    console.log("generateLetterBoxRow was called");
-    return <div className="letterbox-group-container">{wordArr}</div>;
+    // const isLocked = () => {
+    //   if (state.guessCount )
+    // }
+    return (
+      <div key={guessIndex} className="letterbox-group-container">
+        {wordArr}
+      </div>
+    );
   };
 
   const generateWordRows = () => {
     let index = 1;
     let guesses = state.guesses.length;
-    let wordsArr = [];
+    let guessArr = [];
     while (index <= guesses) {
-      console.log("index :: ", index);
       index++;
-      wordsArr.push(generateLetterBoxRow());
+      guessArr.push(generateLetterBoxRow(index));
     }
-    console.log("generateWordRows was called");
-    return <div className="word-group-container">{wordsArr}</div>;
+    return <div className="word-group-container">{guessArr}</div>;
   };
 
   // Render the app UI
   return (
     <div>
       <h1>hello world</h1>
-      <button onClick={buttonClick}>click me</button>
+      {/* <button onClick={buttonClick}>click me</button> */}
       {generateWordRows()}
     </div>
   );
