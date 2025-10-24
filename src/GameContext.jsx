@@ -125,7 +125,9 @@ const GameContext = createContext(null);
 export function GameProvider({ children }) {
   /** @type {[GameState, React.Dispatch<GameAction>]} */
   const [state, dispatch] = useReducer(gameReducer, newState());
-  const [activeWordArray, setActiveWordArray] = useState(["", "", "", "", ""]);
+  const [activeWordArray, setActiveWordArray] = useState(
+    Array(WORD_LENGTH).fill("")
+  );
   const [guessesArray, setGuessesArray] = useState([]);
   const [hasWon, setHasWon] = useState(false);
 

@@ -1,7 +1,7 @@
 // export default function LetterBox({ letter }) {
 //   return <div className="letterbox-container">{letter}</div>;
 // }
-import { useGame } from "./GameContext";
+import { WORD_LENGTH, useGame } from "./GameContext";
 import { useState, useEffect } from "react";
 
 export default function LetterBox({ position, row }) {
@@ -23,7 +23,7 @@ export default function LetterBox({ position, row }) {
     if (event.key === "Enter" || event.key === "Tab") {
       if (!activeWordArray.includes("")) {
         setGuessesArray([...guessesArray, activeWordArray.join("")]);
-        setActiveWordArray(["", "", "", "", ""]);
+        setActiveWordArray(Array(WORD_LENGTH).fill(""));
       }
     }
   };
@@ -34,8 +34,6 @@ export default function LetterBox({ position, row }) {
       let newArr = [...activeWordArray];
       newArr[position] = letter;
       setActiveWordArray(newArr);
-      // setActiveWordArray([...activeWordArray, letter]);
-      // put letter in array in the index of position
     }
   }, [letter]);
 
