@@ -1,12 +1,16 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useGame } from "./GameContext";
 
 import LetterBox from "./LetterBox";
 
 export default function App() {
-  // Example of using the game context
+  // Import global state from GameContext.
   const { state, guessesArray, hasWon, setHasWon } = useGame();
+
+  // Update hasWon variable if the length of the guesses array is less than or equal
+  // to the guess limit and the guesses aray includes the target word.
+  // Only initiate this logic if guessesArray has changed.
   useEffect(() => {
     if (
       guessesArray.length <= state.guesses.length &&
@@ -16,6 +20,7 @@ export default function App() {
     }
   }, [guessesArray]);
 
+  // Generate row of letter box comoponents based on word length.
   const generateLetterBoxRow = (guessIndex) => {
     let index = 0;
     let rowLength = state.wordLength;
@@ -33,6 +38,7 @@ export default function App() {
     );
   };
 
+  // Generate rows of letter box components based on amount of guesses.
   const generateWordRows = () => {
     let index = 0;
     let guesses = state.guesses.length;

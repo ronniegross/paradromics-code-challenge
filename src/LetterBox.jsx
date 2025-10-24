@@ -2,6 +2,7 @@ import { WORD_LENGTH, useGame } from "./GameContext";
 import { useState, useEffect } from "react";
 
 export default function LetterBox({ position, row }) {
+  // Import global state from GameContext.
   const {
     state,
     activeWordArray,
@@ -10,11 +11,16 @@ export default function LetterBox({ position, row }) {
     setGuessesArray,
     hasWon,
   } = useGame();
+
+  // Component state and state setters.
   const [letter, setLetter] = useState("");
   const [isCorrectPosition, setIsCorrectPosition] = useState(false);
   const [isInWord, setisInWord] = useState(false);
   const [isIncorrect, setIsIncorrect] = useState(false);
 
+  // Handler for key down events.
+  // Checks to see if enter or tab was selected, and initates state to update the guesses
+  // array, and resets the active word array.
   const handleKeyDown = (event) => {
     if (event.key === "Enter" || event.key === "Tab") {
       if (!activeWordArray.includes("")) {
@@ -24,6 +30,10 @@ export default function LetterBox({ position, row }) {
     }
   };
 
+  // Checks to see if the state variable "letter" has changed, and if so, calls the checkLetter
+  // function which determines whether or not the letter is in the target word, and if it is, whether
+  // or not it is in the correct position.
+  // It also updates the letter's position  and updates the active word array.
   useEffect(() => {
     if (letter) {
       checkLetter();
@@ -55,6 +65,8 @@ export default function LetterBox({ position, row }) {
     }
   };
 
+  // As letters are being typed into the input components, this function calls the state setter
+  // and ensures that the letters are lowercase.
   const handleChange = (e) => {
     setLetter(e.target.value.toLowerCase());
   };
