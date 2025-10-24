@@ -12,6 +12,7 @@ export default function LetterBox({ position, row }) {
     setActiveWordArray,
     guessesArray,
     setGuessesArray,
+    hasWon,
   } = useGame();
   const [letter, setLetter] = useState("");
   const [isCorrectPosition, setIsCorrectPosition] = useState(false);
@@ -19,23 +20,22 @@ export default function LetterBox({ position, row }) {
   const [isIncorrect, setIsIncorrect] = useState(false);
 
   const handleKeyDown = (event) => {
-    if (event.key === "Backspace") {
-      console.log("Backspace pressed!");
-      dispatch({ type: "keyPressed", key: event.key });
-    }
-    if (event.key === "Enter") {
-      console.log("Enter pressed!");
-      // dispatch({ type: "keyPressed", key: event.key });
-      if (activeWordArray.length === 5) {
+    if (event.key === "Enter" || event.key === "Tab") {
+      if (!activeWordArray.includes("")) {
         setGuessesArray([...guessesArray, activeWordArray.join("")]);
-        setActiveWordArray([]);
+        setActiveWordArray(["", "", "", "", ""]);
       }
     }
   };
 
   useEffect(() => {
     if (letter) {
-      setActiveWordArray([...activeWordArray, letter]);
+      checkLetter();
+      let newArr = [...activeWordArray];
+      newArr[position] = letter;
+      setActiveWordArray(newArr);
+      // setActiveWordArray([...activeWordArray, letter]);
+      // put letter in array in the index of position
     }
   }, [letter]);
 
@@ -62,12 +62,8 @@ export default function LetterBox({ position, row }) {
   };
 
   const handleChange = (e) => {
-    if (letter == "") {
-      setLetter(e.target.value);
-    }
+    setLetter(e.target.value.toLowerCase());
   };
-
-  checkLetter();
 
   return (
     <div className="letterbox-container-wrapper">
@@ -88,7 +84,9 @@ export default function LetterBox({ position, row }) {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         disabled={
-          row - 1 < guessesArray.length || row - 1 > guessesArray.length
+          hasWon
+            ? true
+            : row - 1 < guessesArray.length || row - 1 > guessesArray.length
             ? true
             : false
         }
