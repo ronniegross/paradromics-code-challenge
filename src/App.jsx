@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGame } from "./GameContext";
 
 import LetterBox from "./LetterBox";
@@ -7,8 +7,18 @@ import LetterBoxGroup from "./LetterBoxGroup";
 
 export default function App() {
   // Example of using the game context
-  const { state, dispatch } = useGame();
+  const { state, dispatch, guessesArray, hasWon, setHasWon } = useGame();
   // const []
+
+  useEffect(() => {
+    if (
+      guessesArray.length <= state.guesses.length &&
+      guessesArray.includes(state.targetWord)
+    ) {
+      console.log("you won!");
+      setHasWon(true);
+    }
+  }, [guessesArray]);
 
   console.log("state is :: ", state);
 
@@ -32,7 +42,9 @@ export default function App() {
     let wordArr = [];
     // let letter = null;
     while (index < rowLength) {
-      wordArr.push(<LetterBox key={index} position={index}></LetterBox>);
+      wordArr.push(
+        <LetterBox key={index} position={index} row={guessIndex}></LetterBox>
+      );
       index++;
       // wordArr.push(<LetterBox key={index}>{letter}</LetterBox>);
     }
@@ -40,17 +52,20 @@ export default function App() {
     //   if (state.guessCount )
     // }
     return (
-      <div key={guessIndex} className="letterbox-group-container">
-        {wordArr}
-      </div>
+      <LetterBoxGroup
+        key={guessIndex}
+        rowNumber={guessIndex}
+        className="letterbox-group-container"
+        children={wordArr}
+      />
     );
   };
 
   const generateWordRows = () => {
-    let index = 1;
+    let index = 0;
     let guesses = state.guesses.length;
     let guessArr = [];
-    while (index <= guesses) {
+    while (index < guesses) {
       index++;
       guessArr.push(generateLetterBoxRow(index));
     }
@@ -60,8 +75,11 @@ export default function App() {
   // Render the app UI
   return (
     <div>
-      <h1>hello world</h1>
-      {/* <button onClick={buttonClick}>click me</button> */}
+      <h1>braindle</h1>
+      {hasWon && <h2>You won!!!</h2>}
+      {!hasWon && guessesArray.length == state.guesses.length && (
+        <h2>"You lost :("</h2>
+      )}
       {generateWordRows()}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer, useState } from "react";
 
 const TARGET_WORDS = Object.freeze([
   "brain",
@@ -42,6 +42,7 @@ const INITIAL_STATE = {
  */
 function handleKeyPressed(state, key) {
   let word = state.guesses[state.guessCount];
+  console.log("word is :: ", word);
 
   if (state.phase !== "playing") return state;
 
@@ -59,20 +60,20 @@ function handleKeyPressed(state, key) {
       break;
 
     case "Enter":
-      if (word.length === WORD_LENGTH) {
-        /** @type {GamePhase} */
-        let phase = state.phase;
-        if (word === state.targetWord) {
-          phase = "won";
-        } else if (state.guessCount === MAX_GUESSES - 1) {
-          phase = "lost";
-        }
-        return {
-          ...state,
-          phase,
-          guessCount: state.guessCount + 1,
-        };
-      }
+      // if (word.length === WORD_LENGTH) {
+      //   /** @type {GamePhase} */
+      //   let phase = state.phase;
+      //   if (word === state.targetWord) {
+      //     phase = "won";
+      //   } else if (state.guessCount === MAX_GUESSES - 1) {
+      //     phase = "lost";
+      //   }
+      //   return {
+      //     ...state,
+      //     phase,
+      //     guessCount: state.guessCount + 1,
+      //   };
+      // }
       break;
 
     default:
@@ -125,8 +126,23 @@ const GameContext = createContext(null);
 export function GameProvider({ children }) {
   /** @type {[GameState, React.Dispatch<GameAction>]} */
   const [state, dispatch] = useReducer(gameReducer, newState());
+  const [activeWordArray, setActiveWordArray] = useState([]);
+  const [guessesArray, setGuessesArray] = useState([]);
+  const [hasWon, setHasWon] = useState(false);
+
   return (
-    <GameContext.Provider value={{ state, dispatch }}>
+    <GameContext.Provider
+      value={{
+        state,
+        dispatch,
+        activeWordArray,
+        setActiveWordArray,
+        guessesArray,
+        setGuessesArray,
+        hasWon,
+        setHasWon,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );

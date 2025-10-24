@@ -42,27 +42,55 @@
 }
 
 .letterbox-container {
-  /* padding: 1rem; */
-  /* font-weight: 2rem; */
+  padding: 1rem;
+  font-size: 30px;
   height: 5rem;
   width: 5rem;
   background-color: white;
   color: black;
+  text-align: center;
 }
 
 .letterbox-container-true {
   background-color: green;
+  padding: 1rem;
+  font-size: 30px;
+  height: 5rem;
+  width: 5rem;
+  text-align: center;
 }
 
 .letterbox-container-in-word {
   background-color: orange;
+  padding: 1rem;
+  font-size: 30px;
+  height: 5rem;
+  width: 5rem;
+  text-align: center;
 }
 
 .letterbox-container-not-in-word {
-  background-color: grey;
+  background-color: red;
+  padding: 1rem;
+  font-size: 30px;
+  height: 5rem;
+  width: 5rem;
+  text-align: center;
 }
 
-.letterbox-group-container {
+/* .letterbox-container-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.letterboxgroup-container {
   display: flex;
   flex-direction: row;
+}
+
+.letterboxgroup-container-locked {
+  display: flex;
+  flex-direction: row;
+  pointer-events: none;
 }
