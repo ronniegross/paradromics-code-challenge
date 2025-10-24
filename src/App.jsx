@@ -7,7 +7,6 @@ import LetterBox from "./LetterBox";
 export default function App() {
   // Import global state from GameContext.
   const { state, guessesArray, hasWon, setHasWon } = useGame();
-  console.log("state is ", state);
 
   // Update hasWon variable if the length of the guesses array is less than or equal
   // to the guess limit and the guesses aray includes the target word.
