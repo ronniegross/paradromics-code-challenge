@@ -77,11 +77,11 @@ export default function LetterBox({ position, row }) {
         className={
           guessesArray[row - 1]
             ? isIncorrect
-              ? "letterbox-container-not-in-word"
+              ? "letterbox-container not-in-word"
               : isCorrectPosition
-              ? "letterbox-container-true"
+              ? "letterbox-container true"
               : isInWord
-              ? "letterbox-container-in-word"
+              ? "letterbox-container in-word"
               : "letterbox-container"
             : "letterbox-container"
         }
