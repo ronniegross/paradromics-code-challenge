@@ -6,12 +6,7 @@ import LetterBox from "./LetterBox";
 
 export default function App() {
   // Example of using the game context
-  const { state, dispatch, guessesArray, hasWon, setHasWon, activeWordArray } =
-    useGame();
-  // const []
-  console.log("state is ", state);
-  console.log("activeWordArray, ", activeWordArray);
-  console.log("guessesArray, ", guessesArray);
+  const { state, guessesArray, hasWon, setHasWon } = useGame();
   useEffect(() => {
     if (
       guessesArray.length <= state.guesses.length &&
@@ -32,16 +27,9 @@ export default function App() {
       index++;
     }
     return (
-      <div
-        key={guessIndex}
-        // rowNumber={guessIndex}
-        className="letterboxgroup-container"
-      >
+      <div key={guessIndex} className="letterboxgroup-container">
         {wordArr}
       </div>
-
-      // children={wordArr}
-      // />
     );
   };
 

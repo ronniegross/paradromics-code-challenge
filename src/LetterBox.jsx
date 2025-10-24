@@ -1,13 +1,9 @@
-// export default function LetterBox({ letter }) {
-//   return <div className="letterbox-container">{letter}</div>;
-// }
 import { WORD_LENGTH, useGame } from "./GameContext";
 import { useState, useEffect } from "react";
 
 export default function LetterBox({ position, row }) {
   const {
     state,
-    dispatch,
     activeWordArray,
     setActiveWordArray,
     guessesArray,
