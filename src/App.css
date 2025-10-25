@@ -48,20 +48,9 @@ h2 {
   flex-direction: row;
 }
 
-/* .letterboxgroup-container-locked {
-  display: flex;
-  flex-direction: row;
-  pointer-events: none;
-} */
-
 input.letterbox-container {
   border: 2px solid #22009e;
-  /* background-color: #22009e; */
 }
-
-/* input:focus {
-  background-color: #22009e;
-} */
 
 input:disabled {
   border: 2px solid #a5a5a5;
