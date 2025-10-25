@@ -1,33 +1,61 @@
 import "./App.css";
-import { useEffect } from "react";
-import { useGame } from "./GameContext";
+import { useEffect, useRef } from "react";
+import {
+  useGame,
+  MAX_GUESSES,
+  WORD_LENGTH,
+  pickTargetWord,
+} from "./GameContext";
 
 import LetterBox from "./LetterBox";
 
 export default function App() {
   // Import global state from GameContext.
-  const { state, guessesArray, hasWon, setHasWon } = useGame();
+  const {
+    state,
+    dispatch,
+    guessesArray,
+    setGuessesArray,
+    setActiveWordArray,
+    hasWon,
+    setHasWon,
+    gamePhase,
+    setPhase,
+    targetWord,
+    setTargetWord,
+  } = useGame();
 
   // Update hasWon variable if the length of the guesses array is less than or equal
   // to the guess limit and the guesses aray includes the target word.
   // Only initiate this logic if guessesArray has changed.
   useEffect(() => {
     if (
-      guessesArray.length <= state.guesses.length &&
-      guessesArray.includes(state.targetWord)
+      guessesArray.length <= MAX_GUESSES &&
+      guessesArray.includes(targetWord)
     ) {
       setHasWon(true);
+      // dispatch({ type: "start" });
+      setPhase("win");
+    } else if (guessesArray.length == MAX_GUESSES) {
+      setPhase("lost");
     }
   }, [guessesArray]);
+
+  // const inputRefs = (useRef < Array < Array < HTMLInputElement) | (null >>> []);
 
   // Generate row of letter box comoponents based on word length.
   const generateLetterBoxRow = (guessIndex) => {
     let index = 0;
-    let rowLength = state.wordLength;
+    let rowLength = WORD_LENGTH;
     let wordArr = [];
     while (index < rowLength) {
       wordArr.push(
-        <LetterBox key={index} position={index} row={guessIndex}></LetterBox>
+        <LetterBox
+          // ref={(el) => (inputRefs.current[index][0] = el)}
+          key={index}
+          position={index}
+          row={guessIndex}
+        ></LetterBox>
       );
       index++;
     }
@@ -41,7 +69,7 @@ export default function App() {
   // Generate rows of letter box components based on amount of guesses.
   const generateWordRows = () => {
     let index = 0;
-    let guesses = state.guesses.length;
+    let guesses = MAX_GUESSES;
     let guessArr = [];
     while (index < guesses) {
       index++;
@@ -50,15 +78,30 @@ export default function App() {
     return <div className="word-group-container">{guessArr}</div>;
   };
 
+  const resetGame = () => {
+    dispatch({ type: "start" });
+
+    setActiveWordArray(Array(WORD_LENGTH).fill(""));
+    setGuessesArray([]);
+    setHasWon(false);
+    setPhase("playing");
+    setTargetWord(pickTargetWord().toUpperCase());
+  };
+
   // Render the app UI
   return (
     <div>
-      <h1>braindle</h1>
-      {hasWon && <h2>You won!!!</h2>}
-      {!hasWon && guessesArray.length == state.guesses.length && (
-        <h2>"You lost :("</h2>
-      )}
+      <h1>Braindle</h1>
       {generateWordRows()}
+      {gamePhase !== "playing" && hasWon && <h2>You won! 👏</h2>}
+      {gamePhase !== "playing" && !hasWon && (
+        <h2>You lost 😔 the word was {targetWord.toUpperCase()}</h2>
+      )}
+      {gamePhase !== "playing" && (
+        <button className="start-again-button" onClick={resetGame}>
+          Start Again
+        </button>
+      )}
     </div>
   );
 }

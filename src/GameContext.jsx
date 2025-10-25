@@ -1,13 +1,21 @@
-import React, { createContext, useContext, useReducer, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useState,
+  useEffect,
+} from "react";
 
-const TARGET_WORDS = Object.freeze([
-  "brain",
-  "think",
-  "train",
-  "sheep",
-  "human",
-  "speak",
-]);
+// const TARGET_WORDS = Object.freeze([
+//   "brain",
+//   "think",
+//   "train",
+//   "sheep",
+//   "human",
+//   "speak",
+// ]);
+
+const TARGET_WORDS = Object.freeze(["train"]);
 
 /** @typedef {'playing'|'won'|'lost'} GamePhase */
 
@@ -24,7 +32,7 @@ const TARGET_WORDS = Object.freeze([
  * @typedef { { type: 'start' } | { type: 'keyPressed', key: string } } GameAction
  */
 
-export const MAX_GUESSES = 6;
+export const MAX_GUESSES = 2;
 export const WORD_LENGTH = 5;
 /** @type {GameState} */
 const INITIAL_STATE = {
@@ -116,6 +124,12 @@ function gameReducer(state, action) {
   }
 }
 
+export function pickTargetWord() {
+  return TARGET_WORDS[Math.floor(Math.random() * TARGET_WORDS.length)];
+}
+
+// pickTargetWord();
+
 /** @type {React.Context<{ state: GameState, dispatch: React.Dispatch<GameAction> } | null>} */
 const GameContext = createContext(null);
 
@@ -130,6 +144,16 @@ export function GameProvider({ children }) {
   );
   const [guessesArray, setGuessesArray] = useState([]);
   const [hasWon, setHasWon] = useState(false);
+  const [gamePhase, setPhase] = useState("playing");
+  const [targetWord, setTargetWord] = useState(pickTargetWord().toUpperCase());
+
+  useEffect(() => {
+    if (gamePhase !== "playing") {
+      // setHasWon(false);
+      // setGuessesArray([]);
+      // setActiveWordArray(Array(WORD_LENGTH).fill(""));
+    }
+  }, [gamePhase]);
 
   return (
     <GameContext.Provider
@@ -142,6 +166,10 @@ export function GameProvider({ children }) {
         setGuessesArray,
         hasWon,
         setHasWon,
+        gamePhase,
+        setPhase,
+        targetWord,
+        setTargetWord,
       }}
     >
       {children}
