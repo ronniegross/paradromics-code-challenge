@@ -1,8 +1,9 @@
 #root {
-  max-width: 1280px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  max-height: 1000px;
 }
 
 h1 {
@@ -15,11 +16,10 @@ h2 {
 
 .letterbox-container {
   padding: 1rem;
-  font-size: 4.75em;
+  font-size: 3em;
   font-weight: 800;
-  height: 5rem;
-  width: 5rem;
-  /* background-color: #f5f5f5; */
+  height: 3rem;
+  width: 3rem;
   color: white;
   text-align: center;
   -webkit-text-stroke: 1px grey;
@@ -27,10 +27,6 @@ h2 {
   border-radius: 1rem;
   background-color: #22009e;
 }
-
-/* .letterbox-container.active {
-  background-color: #22009e;
-} */
 
 .letterbox-container.true {
   background-color: #42ad00;
