@@ -33,13 +33,13 @@ export default function LetterBox({ position, row }) {
   }, [letter]);
 
   useEffect(() => {
-    if (!hasWon && targetWord) {
+    if (targetWord) {
       setLetter("");
       setIsCorrectPosition(false);
       setisInWord(false);
       setIsIncorrect(false);
     }
-  }, [hasWon, targetWord]);
+  }, [targetWord]);
 
   // Handler for key down events.
   // Checks to see if enter or tab was selected, and initates state to update the guesses

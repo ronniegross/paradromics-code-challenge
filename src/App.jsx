@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import {
   useGame,
   MAX_GUESSES,
@@ -41,8 +41,6 @@ export default function App() {
     }
   }, [guessesArray]);
 
-  // const inputRefs = (useRef < Array < Array < HTMLInputElement) | (null >>> []);
-
   // Generate row of letter box comoponents based on word length.
   const generateLetterBoxRow = (guessIndex) => {
     let index = 0;
@@ -50,12 +48,7 @@ export default function App() {
     let wordArr = [];
     while (index < rowLength) {
       wordArr.push(
-        <LetterBox
-          // ref={(el) => (inputRefs.current[index][0] = el)}
-          key={index}
-          position={index}
-          row={guessIndex}
-        ></LetterBox>
+        <LetterBox key={index} position={index} row={guessIndex}></LetterBox>
       );
       index++;
     }
