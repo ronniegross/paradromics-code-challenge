@@ -1,25 +1,26 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { useGame } from "./GameContext";
+import { Game, GamePhase } from "./GameContext";
 
 import LetterBox from "./LetterBox";
 
 export default function App() {
   // Example of using the game context
-  const { state, dispatch, guessesArray, hasWon, setHasWon, activeWordArray } =
-    useGame();
+  const { state, dispatch } = Game.use();
   // const []
   console.log("state is ", state);
-  console.log("activeWordArray, ", activeWordArray);
-  console.log("guessesArray, ", guessesArray);
-  useEffect(() => {
-    if (
-      guessesArray.length <= state.guesses.length &&
-      guessesArray.includes(state.targetWord)
-    ) {
-      setHasWon(true);
-    }
-  }, [guessesArray]);
+  console.log("dispatch is ", dispatch);
+
+  // console.log("activeWordArray, ", activeWordArray);
+  // console.log("guessesArray, ", guessesArray);
+  // useEffect(() => {
+  //   if (
+  //     state.guesses.length <= state.guesses.length &&
+  //     state.guesses.includes(state.targetWord)
+  //   ) {
+  //     setHasWon(true);
+  //   }
+  // }, [guessesArray]);
 
   const generateLetterBoxRow = (guessIndex) => {
     let index = 0;
@@ -60,10 +61,11 @@ export default function App() {
   return (
     <div>
       <h1>braindle</h1>
-      {hasWon && <h2>You won!!!</h2>}
+      {/* {hasWon && <h2>You won!!!</h2>}
       {!hasWon && guessesArray.length == state.guesses.length && (
         <h2>"You lost :("</h2>
       )}
+       */}
       {generateWordRows()}
     </div>
   );
